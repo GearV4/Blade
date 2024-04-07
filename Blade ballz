@@ -1,0 +1,213 @@
+-- Create ScreenGui object and set its properties
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.Enabled = true
+screenGui.ResetOnSpawn = false -- Prevents the GUI from resetting when the player respawns
+
+-- Create ImageLabel object to display the title
+local titleLabel = Instance.new("ImageLabel")
+titleLabel.Size = UDim2.new(0, 200, 0, 50)
+titleLabel.Position = UDim2.new(0.5, -100, 0, 10)
+titleLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Dark gray background color
+titleLabel.BorderSizePixel = 0 -- Remove border
+titleLabel.ImageTransparency = 0 -- Make the text visible
+titleLabel.Image = "rbxassetid://6996358407" -- Use an image with the text "ROVA HUB 1.V"
+titleLabel.Parent = screenGui
+
+-- Create ScrollingFrame object
+local scrollingFrame = Instance.new("ScrollingFrame")
+scrollingFrame.Size = UDim2.new(0, 200, 0, 200)
+scrollingFrame.Position = UDim2.new(0.5, -100, 0.5, -100)
+scrollingFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Dark gray background color
+scrollingFrame.BorderSizePixel = 0 -- Remove border
+scrollingFrame.CanvasSize = UDim2.new(0, 0, 1, 0) -- Enable vertical scrolling
+scrollingFrame.Parent = screenGui
+
+-- Create ImageLabel object inside the ScrollingFrame object
+local avatarImageLabel = Instance.new("ImageLabel")
+avatarImageLabel.Size = UDim2.new(0, 50, 0, 50)
+avatarImageLabel.Position = UDim2.new(0, 10, 0, 10) -- Add some padding
+avatarImageLabel.Image = "http://www.roblox.com/Thumbs/Avatar.ashx?x=100&y=100&userid="..game.Players.LocalPlayer.UserId
+avatarImageLabel.Parent = scrollingFrame
+
+-- Create button inside the ScrollingFrame object
+local autoParryButton = Instance.new("TextButton")
+autoParryButton.Size = UDim2.new(0, 150, 0, 50) -- Increase width
+autoParryButton.Position = UDim2.new(0.5, -75, 0, 80) -- Center horizontally, move down
+autoParryButton.BackgroundColor3 = Color3.fromRGB(0, 123, 255) -- Blue background color
+autoParryButton.TextColor3 = Color3.new(1, 1, 1)
+autoParryButton.Text = "Auto Parry V2"
+autoParryButton.Font = Enum.Font.SourceSansBold -- Change font
+autoParryButton.TextSize = 24 -- Increase font size
+autoParryButton.Parent = scrollingFrame
+
+-- Create Open/Close button in the top right corner of the screen
+local openCloseButton = Instance.new("TextButton")
+openCloseButton.Size = UDim2.new(0, 100, 0, 50)
+openCloseButton.Position = UDim2.new(1, -110, 0, 10)
+openCloseButton.BackgroundColor3 = Color3.fromRGB(0, 123, 255) -- Blue background color
+openCloseButton.TextColor3 = Color3.new(1, 1, 1)
+openCloseButton.Text = "Open/Close"
+openCloseButton.Font = Enum.Font.SourceSansBold -- Change font
+openCloseButton.TextSize = 18 -- Decrease font size
+openCloseButton.Parent = screenGui
+
+-- Create PointLight object and set its properties
+local light = Instance.new("PointLight")
+light.Brightness = 5
+light.Range = 20
+light.Color = Color3.fromRGB(255, 255, 255)
+light.Parent = screenGui
+
+-- Define a function to animate the ScrollingFrame's position and transparency
+local function animateScrollingFrame(scrollingFrame, titleLabel, isVisible)
+    local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    if isVisible then
+        scrollingFrame.Visible = true
+        local tween = game:GetService("TweenService"):Create(scrollingFrame, tweenInfo, {Position = UDim2.new(0.5, -100, 0.5, -100), BackgroundTransparency = 0})
+        tween:Play()
+        local titleTween = game:GetService("TweenService"):Create(titleLabel, tweenInfo, {Position = UDim2.new(0.5, -100, 0, 10), ImageTransparency = 0})
+        titleTween:Play()
+    else
+        local tween = game:GetService("TweenService"):Create(scrollingFrame, tweenInfo, {Position = UDim2.new(0.5, -100, 1.5, -100), BackgroundTransparency = 1})
+        tween:Play()
+        local titleTween = game:GetService("TweenService"):Create(titleLabel, tweenInfo, {Position = UDim2.new(0.5, -100, -0.5, -10), ImageTransparency = 1})
+        titleTween:Play()
+        wait(0.5)
+        scrollingFrame.Visible = false
+    end
+end
+
+-- Connect the animateScrollingFrame function to the Open/Close button's MouseButton1Click event
+openCloseButton.MouseButton1Click:Connect(function()
+    animateScrollingFrame(scrollingFrame, titleLabel, not scrollingFrame.Visible)
+end)
+
+-- Define a function to execute the auto parry 
+local function executeScript()
+    animateScrollingFrame(scrollingFrame, titleLabel, true)
+    getgenv().SpamSpeed = 1
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Hosvile/Refinement/main/MC%3ABlade%20Ball%20Spam",true))()
+    autoParryButton.Text = "Auto Parry (work+hosvile)"
+end
+
+autoParryButton.MouseButton1Click:Connect(executeScript)
+
+
+-- Define a function to execute the auto parry 
+local function executeScript()
+    animateScrollingFrame(scrollingFrame, titleLabel, true)
+   getgenv().config = getgenv().config or {
+ hit_time = 0.3, -- // recommended 0.25 to 0.75 \\ --
+ 
+ mode = 'Always', -- // Hold , Toggle , Always \\ --
+ deflect_type = 'Remote', -- // Key Press , Remote \\ --
+ notifications = true,
+ keybind = Enum.KeyCode.V
+}
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hosvile/Refinement/main/MC%3ABlade%20Ball%20Parry%20V4.0.0",true))()
+    autoParryButton.Text = "Auto Parry (work+hosvile)"
+end
+
+autoParryButton.MouseButton1Click:Connect(executeScript)
+
+
+-- Create Antilag button inside the ScrollingFrame object
+local antilagButton = Instance.new("TextButton")
+antilagButton.Size = UDim2.new(0, 150, 0, 50) -- Increase width
+antilagButton.Position = UDim2.new(0.5, -75, 0, 140) -- Center horizontally, move down
+antilagButton.BackgroundColor3 = Color3.fromRGB(0, 123, 255) -- Blue background color
+antilagButton.TextColor3 = Color3.new(1, 1, 1)
+antilagButton.Text = "Antilag"
+antilagButton.Font = Enum.Font.SourceSansBold -- Change font
+antilagButton.TextSize = 24 -- Increase font size
+antilagButton.Parent = scrollingFrame
+
+-- Define a function to execute the antilag script 
+local function executeAntilagScript()
+local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+local g = game
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+t.WaterWaveSize = 0
+t.WaterWaveSpeed = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 0
+l.GlobalShadows = false
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for i, v in pairs(g:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+        v.TextureID = 10385902758728957
+    end
+end
+for i, e in pairs(l:GetChildren()) do
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
+    end
+end
+end
+
+antilagButton.MouseButton1Click:Connect(executeAntilagScript)
+
+-- Create Hold to Spam button inside the ScrollingFrame object
+local holdToSpamButton = Instance.new("TextButton")
+holdToSpamButton.Size = UDim2.new(0, 150, 0, 50) -- Increase width
+holdToSpamButton.Position = UDim2.new(0.5, -75, 0, 200) -- Center horizontally, move down
+holdToSpamButton.BackgroundColor3 = Color3.fromRGB(0, 123, 255) -- Blue background color
+holdToSpamButton.TextColor3 = Color3.new(1, 1, 1)
+holdToSpamButton.Text = "Hold to Spam"
+holdToSpamButton.Font = Enum.Font.SourceSansBold -- Change font
+holdToSpamButton.TextSize = 24 -- Increase font size
+holdToSpamButton.Parent = scrollingFrame
+
+-- Define a function to execute the spam script when the button is held down
+local function holdToSpam()
+    getgenv().SpamSpeed = 1 loadstring(game:HttpGet("https://raw.githubusercontent.com/Hosvile/Refinement/main/MC%3ABlade%20Ball%20Spam",true))()
+end
+
+-- Connect the holdToSpam and stopSpam functions to the MouseButton1Down and MouseButton1Up events of the TextButton object
+holdToSpamButton.MouseButton1Down:Connect(holdToSpam)
+holdToSpamButton.MouseButton1Up:Connect(stopSpam)
+
+-- Define the function to execute the script
+local function executeScript()
+    getgenv().SpamSpeed = 1
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Hosvile/Refinement/main/MC%3ABlade%20Ball%20Spam",true))()
+end
+
+-- Connect the function to the Humanoid.Died event
+game.Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(character)
+        character:WaitForChild("Humanoid").Died:Connect(function()
+            executeScript()
+        end)
+    end)
+end)
+
+-- Create TextLabel object inside the ScrollingFrame object to display player's name
+local playerNameLabel = Instance.new("TextLabel")
+playerNameLabel.Size = UDim2.new(0, 100, 0, 20)
+playerNameLabel.Position = UDim2.new(0, 70, 0, 10) -- Add some padding
+playerNameLabel.Text = game.Players.LocalPlayer.Name
+playerNameLabel.TextColor3 = Color3.new(1, 1, 1)
+playerNameLabel.Font = Enum.Font.SourceSansBold -- Change font
+playerNameLabel.TextSize = 18 -- Increase font size
+playerNameLabel.Parent = scrollingFrame
